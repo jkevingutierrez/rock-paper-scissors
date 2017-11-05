@@ -1,5 +1,5 @@
-const compress = require('compression');
 const express = require('express');
+const compress = require('compression');
 const path = require('path');
 const robots = require('express-robots');
 const favicon = require('serve-favicon');
@@ -22,6 +22,7 @@ mongoose.connect('mongodb://localhost/mean-app', {
 
 const app = express();
 
+
 // port setup
 app.listen(9000, function() {
   console.log('app listening on port 9000');
@@ -33,7 +34,7 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /dist
 app.use(favicon(path.join(__dirname, '../dist', 'favicon.ico')));
-app.use(robots(__dirname + '../dist', 'robots.txt'));
+app.use(robots(path.join(__dirname, '../dist', 'robots.txt')));
 app.use(logger('dev'));
 app.use(compress());
 app.use(bodyParser.json());
