@@ -1,7 +1,17 @@
 language: node_js
+sudo: required
+dist: trusty
+
 node_js:
   - "8.9"
-  - "9.0"
+
+addons:
+  chrome: stable
+
+before_install:
+  # start your web application and listen on `localhost`
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
 cache:
   directories:
     - "node_modules"
