@@ -1,3 +1,4 @@
+const compress = require('compression');
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -38,6 +39,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../dist')));
+
+app.use(compress());
 
 app.use('/', index);
 app.use('/users', users);
