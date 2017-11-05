@@ -1,6 +1,7 @@
 const compress = require('compression');
 const express = require('express');
 const path = require('path');
+const robots = require('express-robots');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -30,8 +31,10 @@ app.listen(9000, function() {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(compress());
 // uncomment after placing your favicon in /dist
 app.use(favicon(path.join(__dirname, '../dist', 'favicon.ico')));
+app.use(robots(__dirname + '../dist', 'robots.txt'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -40,7 +43,6 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../dist')));
 
-app.use(compress());
 
 app.use('/', index);
 app.use('/users', users);
