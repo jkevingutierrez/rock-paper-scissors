@@ -31,11 +31,11 @@ app.listen(9000, function() {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(compress());
 // uncomment after placing your favicon in /dist
 app.use(favicon(path.join(__dirname, '../dist', 'favicon.ico')));
 app.use(robots(__dirname + '../dist', 'robots.txt'));
 app.use(logger('dev'));
+app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
