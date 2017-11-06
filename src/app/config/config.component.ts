@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+import { DialogService, DialogRef, DialogCloseResult } from '@progress/kendo-angular-dialog';
+
+import { MatSnackBar } from '@angular/material';
+
 import { MovementService } from '../services/movement/movement.service';
 import { ParameterService } from '../services/parameter/parameter.service';
 import { Parameter } from '../entities/parameter';
@@ -15,9 +19,13 @@ export class ConfigComponent implements OnInit {
   parameters: Parameter[];
   movements: Movement[];
 
-  constructor(private movementService: MovementService, private parameterService: ParameterService) {
-    this.parameters = [];
-    this.movements = [];
+  constructor(
+    private movementService: MovementService,
+    private parameterService: ParameterService,
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar) {
+      this.parameters = [];
+      this.movements = [];
    }
 
   ngOnInit() {
@@ -27,15 +35,38 @@ export class ConfigComponent implements OnInit {
 
   addMovement() {
     const movement = new Movement('', '', true);
-    console.log(movement);
     this.movements.push(movement);
-    console.log(this.movements);
   }
 
-  deleteMovement(id: string, movement: Movement) {
-    this.movements = this.movements.filter(current => current.name !== movement.name);
+  deleteMovement(id: string, movement: Movement, index: number) {
+    const self = this;
     if (id) {
-      this.movementService.delete(id).then((res) => {
+      const dialog: DialogRef = this.dialogService.open({
+        title: 'Please confirm',
+        content: 'You\'re going to delete a movement. Are you sure?',
+        actions: [
+          { text: 'No' },
+          { text: 'Yes', primary: true }
+        ],
+        width: 450,
+        height: 200,
+        minWidth: 250
+      });
+
+      dialog.result.subscribe((result) => {
+        if (result instanceof DialogCloseResult) {
+          console.log('close');
+        } else {
+          if (result['primary'] === true) {
+            self.movements.splice(index, 1);
+            this.movementService.delete(id).then((res) => {
+              this.snackBar.open('The movement has been deleted succesfully', 'close', {
+                duration: 5000,
+                extraClasses: ['success-snackbar']
+              });
+            });
+          }
+        }
       });
     }
   }
@@ -44,10 +75,18 @@ export class ConfigComponent implements OnInit {
     if (movement.isNew) {
       this.movementService.save(movement).then((res) => {
         movement = res;
+        this.snackBar.open('The movement has been created succesfully', 'close', {
+          duration: 0,
+          extraClasses: ['success-snackbar']
+        });
       });
     } else {
       this.movementService.update(id, movement).then((res) => {
         movement = res;
+        this.snackBar.open('The movement has been updated succesfully', 'close', {
+          duration: 0,
+          extraClasses: ['success-snackbar']
+        });
       });
     }
   }

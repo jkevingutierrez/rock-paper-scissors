@@ -1,7 +1,7 @@
 <div class="row" *ngIf="game">
-  <div class="column">
+  <div class="column" *ngIf="!hasWinner">
     <h2>Round {{ game.rounds.length + 1 }}</h2>
-    <h3>{{ game.players[currentIndex].name }} Name</h3>
+    <h3>{{ game.players[currentIndex].name }}'s turn</h3>
     <form (ngSubmit)="playMove()" #moveForm="ngForm">
       <div class="form-group">
         <label for="move">Select Move</label>
@@ -13,6 +13,13 @@
         <button type="submit" class="btn btn-success" [disabled]="!moveForm.form.valid || !game.players[currentIndex]">Ok</button>
       </div>
     </form>
+  </div>
+  <div class="column" *ngIf="hasWinner">
+    <h2>We have a WINNER!!</h2>
+    <h3>{{ this.game.winner.name }} is the new EMPEROR</h3>
+    <div class="form-group">
+      <button type="button" class="btn btn-success" (click)="newGame()" *ngIf="hasWinner">Play again</button>
+    </div>
   </div>
   <div class="column">
     <h2>Score</h2>

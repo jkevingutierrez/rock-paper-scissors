@@ -4,6 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatSnackBarModule } from '@angular/material';
+
+import { DialogModule } from '@progress/kendo-angular-dialog';
 
 import { AppComponent } from './app.component';
 import { IndexComponent } from './index/index.component';
@@ -35,6 +40,9 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule,
+    DialogModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

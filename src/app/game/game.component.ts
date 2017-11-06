@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { DialogService } from '@progress/kendo-angular-dialog';
+
+import { MatSnackBar } from '@angular/material';
+
 import { GameService } from '../services/game/game.service';
 import { MovementService } from '../services/movement/movement.service';
 import { ParameterService } from '../services/parameter/parameter.service';
@@ -31,7 +35,9 @@ export class GameComponent implements OnInit {
     private movementService: MovementService,
     private parameterService: ParameterService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private dialogService: DialogService,
+    private snackBar: MatSnackBar) {
       this.currentIndex = 0;
       this.roundsToWin = 3;
       this.currentRound = new Round();
@@ -46,17 +52,12 @@ export class GameComponent implements OnInit {
     this.getMovements();
   }
 
-  private initParameters() {
-    this.getRoundsToWin();
-  }
+  newGame() {
+    this.game = new Game(this.game.players);
+    console.log('Starting Game...');
+    console.log(this.game);
 
-  private getRoundsToWin() {
-    const parameterName = 'Rounds to win';
-    this.parameterService.getByName(parameterName).then((res) => {
-      console.log(parameterName);
-      console.log(res);
-      this.roundsToWin = +res.value;
-    });
+    this.saveGame();
   }
 
   playMove() {
@@ -71,6 +72,16 @@ export class GameComponent implements OnInit {
 
         if (this.hasWinner) {
           this.game.winner = this.currentRound.winner;
+          this.dialogService.open({
+            title: 'We have a WINNER!!',
+            content: this.game.winner.name + ' is the new EMPEROR',
+            actions: [
+              { text: 'Ok', primary: true }
+            ],
+            width: 450,
+            height: 200,
+            minWidth: 250
+          });
           this.updateGame(this.route.snapshot.params['id']);
         }
 
@@ -81,6 +92,19 @@ export class GameComponent implements OnInit {
       }
       this.currentMoveName = '';
     }
+  }
+
+  private initParameters() {
+    this.getRoundsToWin();
+  }
+
+  private getRoundsToWin() {
+    const parameterName = 'Rounds to win';
+    this.parameterService.getByName(parameterName).then((res) => {
+      console.log(parameterName);
+      console.log(res);
+      this.roundsToWin = +res.value;
+    });
   }
 
   private getGame(id) {
@@ -100,16 +124,30 @@ export class GameComponent implements OnInit {
     });
   }
 
+  private saveGame() {
+    delete this.game._id;
+    const self = this;
+    this.gameService.save(this.game).then((result) => {
+      this.snackBar.open('The game has been created succesfully', 'close', {
+        duration: 5000,
+        extraClasses: ['success-snackbar']
+      });
+      const id = result['_id'];
+      self.game = result;
+      self.hasWinner = false;
+      this.router.navigate(['/game', id]);
+    });
+  }
+
   private updateGame(id) {
     console.log('Updating Game...');
     console.log(this.game);
     this.gameService.update(id, this.game).then((result) => {
-      id = result['_id'];
+      this.snackBar.open('The game has been updated successfully', 'close', {
+        duration: 5000,
+        extraClasses: ['success-snackbar']
+      });
     });
-  }
-
-  private goHome() {
-    this.router.navigate(['/']);
   }
 
   private validateWinner() {
@@ -130,6 +168,10 @@ export class GameComponent implements OnInit {
 
       if (isWinner) {
         currentWinner = currentPlayer;
+        this.snackBar.open(currentWinner.name + ' won the round ' + (this.game.rounds.length + 1), 'close', {
+          duration: 5000,
+          extraClasses: ['default-snackbar']
+        });
       }
     }
 

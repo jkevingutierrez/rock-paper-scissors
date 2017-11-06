@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { MatSnackBar } from '@angular/material';
+
 import { GameService } from '../services/game/game.service';
 import { ParameterService } from '../services/parameter/parameter.service';
 import { Player } from '../entities/player';
@@ -17,10 +19,14 @@ export class IndexComponent implements OnInit {
   game: Game;
   numberOfPlayers: number;
 
-  constructor(private gameService: GameService, private parameterService: ParameterService, private router: Router) {
-    this.game = new Game();
-    this.players = [];
-    this.numberOfPlayers = 2;
+  constructor(
+    private gameService: GameService,
+    private parameterService: ParameterService,
+    private router: Router,
+    private snackBar: MatSnackBar) {
+      this.game = new Game();
+      this.players = [];
+      this.numberOfPlayers = 2;
    }
 
   ngOnInit() {
@@ -59,6 +65,10 @@ export class IndexComponent implements OnInit {
 
   private saveGame() {
     this.gameService.save(this.game).then((result) => {
+      this.snackBar.open('The game has been created succesfully', 'close', {
+        duration: 5000,
+        extraClasses: ['success-snackbar']
+      });
       const id = result['_id'];
       this.router.navigate(['/game', id]);
     });

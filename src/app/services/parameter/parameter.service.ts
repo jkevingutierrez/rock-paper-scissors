@@ -23,7 +23,7 @@ export class ParameterService extends BaseService {
     return this.http.get(this.baseUrl + '/name/' + name)
       .toPromise()
       .then(response => response as Parameter)
-      .catch(this.handleError);
+      .catch(this.handleError.bind(this));
   }
 
   save(movement: Parameter): Promise<Parameter> {

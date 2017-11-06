@@ -12,7 +12,7 @@
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-success" [disabled]="!moveForm.form.valid">Save</button>
-        <button type="button" class="btn btn-success" (click)="deleteMovement(movement._id, movement)">Delete</button>
+        <button type="button" class="btn btn-success" (click)="deleteMovement(movement._id, movement, i)">Delete</button>
       </div>
     </form>
     <div class="form-group">
