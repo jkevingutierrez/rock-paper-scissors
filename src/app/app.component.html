@@ -1,5 +1,25 @@
-<main role="main" class="main">
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+<div class="wrapper">
+  <header class="navbar navbar-light navbar-toggleable-md bd-navbar">
+  <nav class="navigation">
+    <section class="container">
+      <ul class="navigation-list float-right">
+        <li class="navigation-item">
+          <a class="navigation-link" [routerLink]="['/']">Home</a>
+        </li>
+        <li class="navigation-item">
+          <a class="navigation-link" [routerLink]="['/config']">Configuration</a>
+        </li>
+        <li class="navigation-item">
+          <a class="navigation-link" [routerLink]="['/ranking']">Ranking</a>
+        </li>
+      </ul>
+
+    </section>
+  </nav>
+  </header>
+  <main role="main" class="main">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="column">
+    <h2>Ranking</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Games Won</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rankingElement of ranking; let i = index">
+          <td>{{ rankingElement.player.name }}</td>
+          <td>{{ rankingElement.wonGames }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

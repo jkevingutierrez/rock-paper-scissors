@@ -8,13 +8,23 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
-const users = require('./routes/users');
+const game = require('./routes/game');
+const movement = require('./routes/movement');
+const parameter = require('./routes/parameter');
 
 const mongoose = require('mongoose');
 
+const ParameterExpert = require('./expert/parameter-expert');
+const MovementExpert = require('./expert/movement-expert');
+
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost/mean-app', {
+var uriString =
+  process.env.PROD_MONGODB ||
+  process.env.MONGODB_URI ||
+  'mongodb://localhost/rock-paper-scissors';
+
+mongoose.connect(uriString, {
     useMongoClient: true,
   })
   .then(() => console.log('connection successful'))
@@ -22,10 +32,14 @@ mongoose.connect('mongodb://localhost/mean-app', {
 
 const app = express();
 
-
 // port setup
 app.listen(9000, function() {
-  console.log('app listening on port 9000');
+  console.log('app listening on port 9000!');
+
+  console.log(ParameterExpert);
+
+  ParameterExpert.initDefaultValues();
+  MovementExpert.initDefaultValues();
 });
 
 // view engine setup
@@ -44,9 +58,10 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../dist')));
 
-
 app.use('/', index);
-app.use('/users', users);
+app.use('/game', game);
+app.use('/movement', movement);
+app.use('/parameter', parameter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

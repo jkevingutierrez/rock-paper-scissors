@@ -1,0 +1,14 @@
+<h2>Enter player's names</h2>
+<div class="row">
+  <div class="column">
+    <form (ngSubmit)="startGame()" #gameForm="ngForm">
+      <div class="form-group" *ngFor="let player of players; let i = index">
+        <label [for]="'player' + (i + 1)">Player {{ (i + 1) }}</label>
+        <input type="text" class="form-control" [(ngModel)]="player.name" [name]="'player-' + (i + 1)" placeholder="Name" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!gameForm.form.valid || players.length === 0">Start Game</button>
+      </div>
+    </form>
+  </div>
+</div>

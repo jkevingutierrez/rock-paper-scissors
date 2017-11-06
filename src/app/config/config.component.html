@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="column">
+    <h2>Movements</h2>
+    <form (ngSubmit)="saveMovement(movement._id, movement)" *ngFor="let movement of movements; let i = index" #moveForm="ngForm">
+      <div class="form-group">
+        <label [for]="'name-' + i">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="movement.name" [name]="'name-' + i" placeholder="Name" [autofocus]="movement.isNew" required>
+      </div>
+      <div class="form-group">
+        <label [for]="'kills-' + i">Kills</label>
+        <input type="text" class="form-control" [(ngModel)]="movement.kills" [name]="'kills-' + i" placeholder="Kills" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!moveForm.form.valid">Save</button>
+        <button type="button" class="btn btn-success" (click)="deleteMovement(movement._id, movement)">Delete</button>
+      </div>
+    </form>
+    <div class="form-group">
+      <button type="button" class="btn btn-success" (click)="addMovement()">Add new movement</button>
+    </div>
+  </div>
+  <div class="column">
+    <h2>Parameters</h2>
+    <form (ngSubmit)="saveParameter(parameter._id, parameter)" *ngFor="let parameter of parameters; let i = index" #moveForm="ngForm">
+      <div class="form-group" >
+        <label [for]="'parameter-' + i">Parameter</label>
+        <input type="text" class="form-control" [(ngModel)]="parameter.name" [name]="'parameter-' + i" placeholder="Name" readonly>
+      </div>
+      <div class="form-group">
+        <label [for]="'value-' + i">Value</label>
+        <input type="text" class="form-control" [(ngModel)]="parameter.value" [name]="'value-' + i" placeholder="Value" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" [disabled]="!moveForm.form.valid">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

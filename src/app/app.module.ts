@@ -1,31 +1,46 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-
-import { AppComponent } from './app.component';
-
 import { Routes, RouterModule } from '@angular/router';
 
+import { AppComponent } from './app.component';
+import { IndexComponent } from './index/index.component';
 import { GameComponent } from './game/game.component';
+import { ConfigComponent } from './config/config.component';
+
+import { GameService } from './services/game/game.service';
+import { MovementService } from './services/movement/movement.service';
+import { ParameterService } from './services/parameter/parameter.service';
+import { RankingComponent } from './ranking/ranking.component';
 
 const appRoutes: Routes = [
-  { path: '', component: GameComponent },
+  { path: '', component: IndexComponent },
+  { path: 'game', redirectTo: '', pathMatch: 'full' },
+  { path: 'game/:id', component: GameComponent },
+  { path: 'config', component: ConfigComponent },
+  { path: 'ranking', component: RankingComponent },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     GameComponent,
+    ConfigComponent,
+    IndexComponent,
+    RankingComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
+    GameService,
+    MovementService,
+    ParameterService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]

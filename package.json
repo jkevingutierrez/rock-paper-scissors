@@ -16,9 +16,9 @@
     "lint": "ng lint",
     "serve": "ng serve --proxy-config proxy.config.json",
     "e2e": "ng e2e",
-    "dev": "echo 'run dev' && npm start",
+    "dev": "echo 'run dev' & npm start",
     "prod": "ng build --prod && npm start",
-    "nodemon": "ng build --prod && ./node_modules/nodemon/bin/nodemon.js --config nodemon.json --exec npm run dev"
+    "nodemon": "ng build && ./node_modules/nodemon/bin/nodemon.js ./server/app.js --config nodemon.json --exec npm run dev"
   },
   "private": true,
   "dependencies": {
