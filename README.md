@@ -1,4 +1,4 @@
-# Rock Paper Scissors
+# Game of Drones
 
 This is a version of Rock Paper Scissors using angular 5, node, express and mongo
 
