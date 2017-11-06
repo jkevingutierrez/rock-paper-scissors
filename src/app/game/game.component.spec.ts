@@ -1,5 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 
+import { GameService } from '../services/game/game.service';
+import { MovementService } from '../services/movement/movement.service';
+import { ParameterService } from '../services/parameter/parameter.service';
 import { GameComponent } from './game.component';
 
 describe('GameComponent', () => {
@@ -8,7 +14,17 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameComponent ]
+      imports: [
+        FormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      declarations: [ GameComponent ],
+      providers: [
+        GameService,
+        MovementService,
+        ParameterService
+      ]
     })
     .compileComponents();
   }));
