@@ -1,5 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 
+import { GameService } from '../services/game/game.service';
 import { RankingComponent } from './ranking.component';
 
 describe('RankingComponent', () => {
@@ -8,7 +12,15 @@ describe('RankingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RankingComponent ]
+      imports: [
+        FormsModule,
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      declarations: [ RankingComponent ],
+      providers: [
+        GameService
+      ]
     })
     .compileComponents();
   }));
