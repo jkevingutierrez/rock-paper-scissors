@@ -4,7 +4,7 @@ This is a version of Rock Paper Scissors using angular 5, node, express and mong
 
 ## Execute
 
-After install npm packages, run `npm start` or `npm run prod` to execute te app. Navigate to `http://localhost:9000/`.
+After install npm packages, run `npm run prod` to execute the app. Navigate to `http://localhost:9000/`.
 
 ## Running unit tests
 
