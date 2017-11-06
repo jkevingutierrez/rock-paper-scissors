@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
+import { MatSnackBarModule } from '@angular/material';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+
 import { MovementService } from '../services/movement/movement.service';
 import { ParameterService } from '../services/parameter/parameter.service';
 import { ConfigComponent } from './config.component';
@@ -14,7 +17,9 @@ describe('ConfigComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        DialogModule
       ],
       declarations: [ ConfigComponent ],
       providers: [

@@ -3,6 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
+import { MatSnackBarModule } from '@angular/material';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+
 import { GameService } from '../services/game/game.service';
 import { RankingComponent } from './ranking.component';
 
@@ -15,7 +18,8 @@ describe('RankingComponent', () => {
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatSnackBarModule
       ],
       declarations: [ RankingComponent ],
       providers: [
