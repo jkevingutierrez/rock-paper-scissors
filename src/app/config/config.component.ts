@@ -76,7 +76,7 @@ export class ConfigComponent implements OnInit {
       this.movementService.save(movement).then((res) => {
         movement = res;
         this.snackBar.open('The movement has been created succesfully', 'close', {
-          duration: 0,
+          duration: 5000,
           extraClasses: ['success-snackbar']
         });
       });
@@ -84,7 +84,7 @@ export class ConfigComponent implements OnInit {
       this.movementService.update(id, movement).then((res) => {
         movement = res;
         this.snackBar.open('The movement has been updated succesfully', 'close', {
-          duration: 0,
+          duration: 5000,
           extraClasses: ['success-snackbar']
         });
       });

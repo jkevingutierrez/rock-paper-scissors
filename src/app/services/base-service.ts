@@ -57,7 +57,7 @@ export abstract class BaseService {
       message = message.substring(0, 200) + '...';
     }
     this.snackBar.open(message, 'close', {
-      duration: 0,
+      duration: 5000,
       extraClasses: ['error-snackbar']
     });
 
