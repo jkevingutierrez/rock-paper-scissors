@@ -22,7 +22,7 @@
   <div class="column">
     <h2>Parameters</h2>
     <form (ngSubmit)="saveParameter(parameter._id, parameter)" *ngFor="let parameter of parameters; let i = index" #moveForm="ngForm">
-      <div class="form-group" >
+      <div class="form-group">
         <label [for]="'parameter-' + i">Parameter</label>
         <input type="text" class="form-control" [(ngModel)]="parameter.name" [name]="'parameter-' + i" placeholder="Name" readonly>
       </div>
