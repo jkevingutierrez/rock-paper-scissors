@@ -3,6 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
+import { MatSnackBarModule } from '@angular/material';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+
 import { GameService } from '../services/game/game.service';
 import { MovementService } from '../services/movement/movement.service';
 import { ParameterService } from '../services/parameter/parameter.service';
@@ -17,7 +20,9 @@ describe('GameComponent', () => {
       imports: [
         FormsModule,
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatSnackBarModule,
+        DialogModule
       ],
       declarations: [ GameComponent ],
       providers: [
