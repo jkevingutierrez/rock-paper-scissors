@@ -82,7 +82,7 @@ export class GameComponent implements OnInit {
             height: 200,
             minWidth: 250
           });
-          this.updateGame(this.route.snapshot.params['id']);
+          this.finishGame(this.route.snapshot.params['id']);
         }
 
         this.currentIndex = 0;
@@ -128,22 +128,22 @@ export class GameComponent implements OnInit {
     delete this.game._id;
     const self = this;
     this.gameService.save(this.game).then((result) => {
-      this.snackBar.open('The game has been created succesfully', 'close', {
+      const id = result['_id'];
+      this.snackBar.open('The game with id "' + id + '"has been created succesfully', 'close', {
         duration: 5000,
         extraClasses: ['success-snackbar']
       });
-      const id = result['_id'];
       self.game = result;
       self.hasWinner = false;
       this.router.navigate(['/game', id]);
     });
   }
 
-  private updateGame(id) {
-    console.log('Updating Game...');
+  private finishGame(id) {
+    console.log('Finishing Game...');
     console.log(this.game);
     this.gameService.update(id, this.game).then((result) => {
-      this.snackBar.open('The game has been updated successfully', 'close', {
+      this.snackBar.open('The game with id "' + id + '" has finished', 'close', {
         duration: 5000,
         extraClasses: ['success-snackbar']
       });
@@ -168,18 +168,29 @@ export class GameComponent implements OnInit {
 
       if (isWinner) {
         currentWinner = currentPlayer;
-        this.snackBar.open(currentWinner.name + ' won the round ' + (this.game.rounds.length + 1), 'close', {
-          duration: 5000,
-          extraClasses: ['default-snackbar']
-        });
       }
     }
 
     if (currentWinner) {
+      this.snackBar.open(currentWinner.name +
+        ' won round ' + (this.game.rounds.length + 1) +
+        '. ' + this.currentRound.moves.join(' vs '),
+        'close', {
+          duration: 5000,
+          extraClasses: ['default-snackbar']
+        });
+
       currentWinner.wonRounds = currentWinner.wonRounds || 0;
       currentWinner.wonRounds++;
       this.currentRound.winner = currentWinner;
       this.hasWinner = currentWinner.wonRounds === this.roundsToWin;
+    } else {
+      this.snackBar.open('Draw in round ' + (this.game.rounds.length + 1) +
+        '. ' + this.currentRound.moves.join(' vs '),
+        'close', {
+          duration: 5000,
+          extraClasses: ['default-snackbar']
+        });
     }
   }
 

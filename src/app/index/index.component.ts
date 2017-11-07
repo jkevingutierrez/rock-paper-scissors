@@ -65,11 +65,11 @@ export class IndexComponent implements OnInit {
 
   private saveGame() {
     this.gameService.save(this.game).then((result) => {
-      this.snackBar.open('The game has been created succesfully', 'close', {
+      const id = result['_id'];
+      this.snackBar.open('The game with id "' + id + '" has been created succesfully', 'close', {
         duration: 5000,
         extraClasses: ['success-snackbar']
       });
-      const id = result['_id'];
       this.router.navigate(['/game', id]);
     });
   }

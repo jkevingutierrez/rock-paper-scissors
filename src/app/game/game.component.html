@@ -14,7 +14,7 @@
       </div>
     </form>
   </div>
-  <div class="column" *ngIf="hasWinner">
+  <div class="column" *ngIf="hasWinner && this.game.winner">
     <h2>We have a WINNER!!</h2>
     <h3>{{ this.game.winner.name }} is the new EMPEROR</h3>
     <div class="form-group">
