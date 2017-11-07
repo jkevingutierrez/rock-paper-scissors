@@ -9,6 +9,6 @@ describe('rock-paper-scissors App', () => {
 
   it('should have a title', () => {
     page.navigateTo();
-    expect(page.getPageTitle()).toEqual('Rock Paper Scissors');
+    expect(page.getPageTitle()).toEqual('Game of Drones');
   });
 });

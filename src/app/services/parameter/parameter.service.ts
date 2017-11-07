@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { BaseService } from '../base-service';
 import { Parameter } from '../../entities/parameter';
+import { Constants } from '../../constants';
 
 export class ParameterService extends BaseService {
 
@@ -20,7 +21,7 @@ export class ParameterService extends BaseService {
   }
 
   getByName(name: string): Promise<Parameter> {
-    return this.http.get(this.baseUrl + '/name/' + name)
+    return this.http.get(Constants.ROOT_URL + this.baseUrl + '/name/' + name)
       .toPromise()
       .then(response => response as Parameter)
       .catch(this.handleError.bind(this));

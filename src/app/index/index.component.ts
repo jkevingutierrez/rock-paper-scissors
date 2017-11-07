@@ -7,6 +7,7 @@ import { GameService } from '../services/game/game.service';
 import { ParameterService } from '../services/parameter/parameter.service';
 import { Player } from '../entities/player';
 import { Game } from '../entities/game';
+import { Constants } from '../constants';
 
 @Component({
   selector: 'app-index',
@@ -67,8 +68,8 @@ export class IndexComponent implements OnInit {
     this.gameService.save(this.game).then((result) => {
       const id = result['_id'];
       this.snackBar.open('The game with id "' + id + '" has been created succesfully', 'close', {
-        duration: 5000,
-        extraClasses: ['success-snackbar']
+        duration: Constants.POPUPS_TIME,
+        extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
       });
       this.router.navigate(['/game', id]);
     });

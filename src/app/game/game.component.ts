@@ -12,6 +12,7 @@ import { Game } from '../entities/game';
 import { Round } from '../entities/round';
 import { Movement } from '../entities/movement';
 import { Player } from '../entities/player';
+import { Constants } from '../constants';
 
 
 @Component({
@@ -53,11 +54,7 @@ export class GameComponent implements OnInit {
   }
 
   newGame() {
-    this.game = new Game(this.game.players);
-    console.log('Starting Game...');
-    console.log(this.game);
-
-    this.saveGame();
+    this.router.navigate(['/']);
   }
 
   playMove() {
@@ -73,14 +70,14 @@ export class GameComponent implements OnInit {
         if (this.hasWinner) {
           this.game.winner = this.currentRound.winner;
           this.dialogService.open({
-            title: 'We have a WINNER!!',
+            title: Constants.WINNER_TITLE,
             content: this.game.winner.name + ' is the new EMPEROR',
             actions: [
               { text: 'Ok', primary: true }
             ],
-            width: 450,
-            height: 200,
-            minWidth: 250
+            width: Constants.POPUPS_WIDTH,
+            height: Constants.POPUPS_HEIGHT,
+            minWidth: Constants.POPUPS_MIN_WIDTH
           });
           this.finishGame(this.route.snapshot.params['id']);
         }
@@ -124,28 +121,13 @@ export class GameComponent implements OnInit {
     });
   }
 
-  private saveGame() {
-    delete this.game._id;
-    const self = this;
-    this.gameService.save(this.game).then((result) => {
-      const id = result['_id'];
-      this.snackBar.open('The game with id "' + id + '"has been created succesfully', 'close', {
-        duration: 5000,
-        extraClasses: ['success-snackbar']
-      });
-      self.game = result;
-      self.hasWinner = false;
-      this.router.navigate(['/game', id]);
-    });
-  }
-
   private finishGame(id) {
     console.log('Finishing Game...');
     console.log(this.game);
     this.gameService.update(id, this.game).then((result) => {
-      this.snackBar.open('The game with id "' + id + '" has finished', 'close', {
-        duration: 5000,
-        extraClasses: ['success-snackbar']
+      this.snackBar.open('The game with id "' + id + '" has finished', Constants.CLOSE_MESSAGE, {
+        duration: Constants.POPUPS_TIME,
+        extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
       });
     });
   }
@@ -175,9 +157,9 @@ export class GameComponent implements OnInit {
       this.snackBar.open(currentWinner.name +
         ' won round ' + (this.game.rounds.length + 1) +
         '. ' + this.currentRound.moves.join(' vs '),
-        'close', {
-          duration: 5000,
-          extraClasses: ['default-snackbar']
+        Constants.CLOSE_MESSAGE, {
+          duration: Constants.POPUPS_TIME,
+          extraClasses: [Constants.DEFAULT_SNACKBAR_CLASS]
         });
 
       currentWinner.wonRounds = currentWinner.wonRounds || 0;
@@ -187,9 +169,9 @@ export class GameComponent implements OnInit {
     } else {
       this.snackBar.open('Draw in round ' + (this.game.rounds.length + 1) +
         '. ' + this.currentRound.moves.join(' vs '),
-        'close', {
-          duration: 5000,
-          extraClasses: ['default-snackbar']
+        Constants.CLOSE_MESSAGE, {
+          duration: Constants.POPUPS_TIME,
+          extraClasses: [Constants.DEFAULT_SNACKBAR_CLASS]
         });
     }
   }
