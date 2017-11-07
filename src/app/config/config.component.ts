@@ -60,7 +60,7 @@ export class ConfigComponent implements OnInit {
           if (result['primary'] === true) {
             self.movements.splice(index, 1);
             this.movementService.delete(id).then((res) => {
-              this.snackBar.open('The movement has been deleted succesfully', 'close', {
+              this.snackBar.open('The movement "' + movement + '" has been deleted succesfully', 'close', {
                 duration: 5000,
                 extraClasses: ['success-snackbar']
               });
@@ -74,16 +74,14 @@ export class ConfigComponent implements OnInit {
   saveMovement(id: string, movement: Movement) {
     if (movement.isNew) {
       this.movementService.save(movement).then((res) => {
-        movement = res;
-        this.snackBar.open('The movement has been created succesfully', 'close', {
+        this.snackBar.open('The movement "' + movement.name + '" kills "' + movement.kills + '" has been created succesfully', 'close', {
           duration: 5000,
           extraClasses: ['success-snackbar']
         });
       });
     } else {
       this.movementService.update(id, movement).then((res) => {
-        movement = res;
-        this.snackBar.open('The movement has been updated succesfully', 'close', {
+        this.snackBar.open('The movement "' + movement.name + '" kills "' + movement.kills + '" has been updated succesfully', 'close', {
           duration: 5000,
           extraClasses: ['success-snackbar']
         });
@@ -94,6 +92,10 @@ export class ConfigComponent implements OnInit {
   saveParameter(id: string, parameter: Parameter) {
     this.parameterService.update(id, parameter).then((res) => {
       parameter = res;
+      this.snackBar.open('The parameter "' + parameter.name + '" has been updated succesfully', 'close', {
+        duration: 5000,
+        extraClasses: ['success-snackbar']
+      });
     });
   }
 
