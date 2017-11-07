@@ -22,7 +22,7 @@ mongoose.Promise = global.Promise;
 var uriString =
   process.env.PROD_MONGODB ||
   process.env.MONGODB_URI ||
-  'mongodb://localhost/rock-paper-scissors';
+  'mongodb://localhost/game-of-drones';
 
 mongoose.connect(uriString, {
     useMongoClient: true,
