@@ -4,7 +4,7 @@ export class Parameter extends BaseEntity {
 
   public _id: string;
 
-  constructor(public name: string, public value) {
+  constructor(public name: string, public value, public type) {
     super();
   }
 

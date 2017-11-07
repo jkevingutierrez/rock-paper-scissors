@@ -24,11 +24,11 @@
     <form (ngSubmit)="saveParameter(parameter._id, parameter, i)" *ngFor="let parameter of parameters; let i = index" #moveForm="ngForm">
       <div class="form-group">
         <label [for]="'parameter-' + i">Parameter</label>
-        <input type="text" class="form-control" [(ngModel)]="parameter.name" [name]="'parameter-' + i" placeholder="Name" readonly>
+        <input type="text" class="form-control" [(ngModel)]="parameter.name" [name]="'parameter-' + i" placeholder="Name" readonly required>
       </div>
       <div class="form-group">
         <label [for]="'value-' + i">Value</label>
-        <input type="text" class="form-control" [(ngModel)]="parameter.value" [name]="'value-' + i" placeholder="Value" required>
+        <input [type]="parameter.type === 'Number' ? 'number' : 'text'" class="form-control" [(ngModel)]="parameter.value" [name]="'value-' + i" placeholder="Value" required>
       </div>
       <div class="form-group">
         <button type="submit" class="btn btn-success" [disabled]="!moveForm.form.valid">Save</button>
