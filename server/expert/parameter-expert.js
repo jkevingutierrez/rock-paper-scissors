@@ -4,19 +4,23 @@ class ParameterExpert {
   static initDefaultValues() {
     const numberOfPlayers = {
       name: 'Number of players',
-      value: 2
+      value: 2,
+      type: 'Number'
     };
     this.findOrCreateParameter(numberOfPlayers);
 
     const roundsToWin = {
       name: 'Rounds to win',
-      value: 3
+      value: 3,
+      type: 'Number'
     };
     this.findOrCreateParameter(roundsToWin);
   }
 
   static findOrCreateParameter(defaultParameter) {
-    Parameter.findOne({ name: defaultParameter.name })
+    Parameter.findOne({
+        name: defaultParameter.name
+      })
       .exec(function (err, parameter) {
         if (err) return next(err);
         console.log('Stored parameter:');
