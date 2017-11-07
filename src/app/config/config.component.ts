@@ -80,7 +80,7 @@ export class ConfigComponent implements OnInit {
       return otherMovement.name === movement.name && otherMovement.kills === movement.kills && index !== otherIndex;
     });
 
-    if (typeof otherEqualMovement !== 'undefined') {
+    if (typeof otherEqualMovement === 'undefined') {
       if (movement.isNew) {
         this.movementService.save(movement).then((res) => {
           const message = 'The movement "' + movement.name + '" kills "' + movement.kills + '" has been created succesfully';
@@ -92,7 +92,6 @@ export class ConfigComponent implements OnInit {
         });
       } else {
         this.movementService.update(id, movement).then((res) => {
-          self.movements[index] = res;
           const message = 'The movement "' + movement.name + '" kills "' + movement.kills + '" has been updated succesfully';
           this.snackBar.open(message, Constants.CLOSE_MESSAGE, {
             duration: Constants.POPUPS_TIME,
@@ -112,7 +111,6 @@ export class ConfigComponent implements OnInit {
   saveParameter(id: string, parameter: Parameter, index) {
     const self = this;
     this.parameterService.update(id, parameter).then((res) => {
-      self.parameters[index] = res;
       this.snackBar.open('The parameter "' + parameter.name + '" has been updated succesfully', Constants.CLOSE_MESSAGE, {
         duration: Constants.POPUPS_TIME,
         extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
