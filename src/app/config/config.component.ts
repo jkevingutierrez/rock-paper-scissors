@@ -69,6 +69,8 @@ export class ConfigComponent implements OnInit {
           }
         }
       });
+    } else {
+      self.movements.splice(index, 1);
     }
   }
 
