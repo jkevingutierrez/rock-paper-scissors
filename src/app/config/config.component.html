@@ -1,7 +1,7 @@
 <div class="row">
   <div class="column">
     <h2>Movements</h2>
-    <form (ngSubmit)="saveMovement(movement._id, movement)" *ngFor="let movement of movements; let i = index" #moveForm="ngForm">
+    <form (ngSubmit)="saveMovement(movement._id, movement, i)" *ngFor="let movement of movements; let i = index" #moveForm="ngForm">
       <div class="form-group">
         <label [for]="'name-' + i">Name</label>
         <input type="text" class="form-control" [(ngModel)]="movement.name" [name]="'name-' + i" placeholder="Name" [autofocus]="movement.isNew" required>
@@ -21,7 +21,7 @@
   </div>
   <div class="column">
     <h2>Parameters</h2>
-    <form (ngSubmit)="saveParameter(parameter._id, parameter)" *ngFor="let parameter of parameters; let i = index" #moveForm="ngForm">
+    <form (ngSubmit)="saveParameter(parameter._id, parameter, i)" *ngFor="let parameter of parameters; let i = index" #moveForm="ngForm">
       <div class="form-group">
         <label [for]="'parameter-' + i">Parameter</label>
         <input type="text" class="form-control" [(ngModel)]="parameter.name" [name]="'parameter-' + i" placeholder="Name" readonly>
