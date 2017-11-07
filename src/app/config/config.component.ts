@@ -60,7 +60,8 @@ export class ConfigComponent implements OnInit {
           if (result['primary'] === true) {
             self.movements.splice(index, 1);
             this.movementService.delete(id).then((res) => {
-              this.snackBar.open('The movement "' + movement.name + '" kills "' + movement.kills + '" has been deleted succesfully', Constants.CLOSE_MESSAGE, {
+              const message = 'The movement "' + movement.name + '" kills "' + movement.kills + '" has been deleted succesfully';
+              this.snackBar.open(message, Constants.CLOSE_MESSAGE, {
                 duration: Constants.POPUPS_TIME,
                 extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
               });
@@ -73,21 +74,35 @@ export class ConfigComponent implements OnInit {
 
   saveMovement(id: string, movement: Movement, index: number) {
     const self = this;
-    if (movement.isNew) {
-      this.movementService.save(movement).then((res) => {
-        self.movements[index] = res;
-        this.snackBar.open('The movement "' + movement.name + '" kills "' + movement.kills + '" has been created succesfully', Constants.CLOSE_MESSAGE, {
-          duration: Constants.POPUPS_TIME,
-          extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
+    const otherEqualMovement = this.movements.find((otherMovement, otherIndex) => {
+      return otherMovement.name === movement.name && otherMovement.kills === movement.kills && index !== otherIndex;
+    });
+
+    if (typeof otherEqualMovement !== 'undefined') {
+      if (movement.isNew) {
+        this.movementService.save(movement).then((res) => {
+          const message = 'The movement "' + movement.name + '" kills "' + movement.kills + '" has been created succesfully';
+          self.movements[index] = res;
+          this.snackBar.open(message, Constants.CLOSE_MESSAGE, {
+            duration: Constants.POPUPS_TIME,
+            extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
+          });
         });
-      });
+      } else {
+        this.movementService.update(id, movement).then((res) => {
+          self.movements[index] = res;
+          const message = 'The movement "' + movement.name + '" kills "' + movement.kills + '" has been updated succesfully';
+          this.snackBar.open(message, Constants.CLOSE_MESSAGE, {
+            duration: Constants.POPUPS_TIME,
+            extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
+          });
+        });
+      }
     } else {
-      this.movementService.update(id, movement).then((res) => {
-        self.movements[index] = res;
-        this.snackBar.open('The movement "' + movement.name + '" kills "' + movement.kills + '" has been updated succesfully', Constants.CLOSE_MESSAGE, {
-          duration: Constants.POPUPS_TIME,
-          extraClasses: [Constants.SUCESS_SNACKBAR_CLASS]
-        });
+      const message = 'The movement "' + movement.name + '" kills "' + movement.kills + '" already exists.';
+      this.snackBar.open(message, Constants.CLOSE_MESSAGE, {
+        duration: Constants.POPUPS_TIME,
+        extraClasses: [Constants.ERROR_SNACKBAR_CLASS]
       });
     }
   }

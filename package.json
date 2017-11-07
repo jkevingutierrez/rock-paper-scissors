@@ -1,6 +1,6 @@
 {
   "name": "game-of-drones",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "license": "MIT",
   "engines": {
     "node": "8.9.x",
